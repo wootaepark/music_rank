@@ -8,16 +8,23 @@ dotenv.config();
 const app = express();
 
 
-app.set('port', process.env.PORT | 3000)
+app.set('port', process.env.PORT | 3000);
 app.use(express.static(path.join(__dirname,'public')));
+
 app.use(morgan('dev'));
 
 
 app.get('/',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'views/index.html'));
 });
+
+
 app.get('/main',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'views/main.html'));
+    next();
+}, (req,res,next)=>{
+    const musicPath = path.join(__dirname, 'music/sample.mp3');
+   // res.sendFile(musicPath);
 });
 
 // 내가 구상하고 있는 어플리케이션 : 유튜브 (링크)혹은 자신이 mp3 파일을 올릴 수도 있다.
