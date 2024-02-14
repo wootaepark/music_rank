@@ -5,7 +5,9 @@ const router = express.Router();
 
 
 router.get('/', (req, res)=>{
-    res.sendFile(path.join(__dirname,'..','views/main.html'));
+    res.render(path.join(__dirname,'..','views/main.html'));
 });
 
 module.exports = router;
+
+// '/main' 라우터
