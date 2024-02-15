@@ -1,7 +1,7 @@
 {
-  "name": "rank_music",
+  "name": "find_photo",
   "version": "0.0.1",
-  "description": "let's enjoy music",
+  "description": "let's enjoy photo",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app"
