@@ -1,5 +1,5 @@
 {
-  "name": "find_photo",
+  "name": "play_photo",
   "version": "0.0.1",
   "description": "let's enjoy photo",
   "main": "app.js",
@@ -20,3 +20,4 @@
     "nodemon": "^3.0.3"
   }
 }
+`
