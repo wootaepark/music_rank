@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res)=>{
-    res.render(path.join(__dirname,'..','views/main.html'));
+    res.render('main');
 });
 
 module.exports = router;
