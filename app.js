@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const morgan = require('morgan');
 const indexRouter = require('./routes/index');
-const mainRouter = require('./routes/main');
+const postRouter = require('./routes/post');
 const nunjucks = require('nunjucks');
 
 dotenv.config();
@@ -23,7 +23,8 @@ app.use(morgan('dev'));
 
 
 app.use('/',indexRouter);
-app.use('/main',mainRouter);
+app.use('/post',postRouter);
+
 
 app.use((req, res, next)=>{
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
