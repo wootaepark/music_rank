@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" href="image/camera.ico">
+        <link rel="stylesheet" href="style/login.css">
+        <link rel="stylesheet" href="style/main.css">
+        <title>LP PHOTO | {{title}}</title>
+
+    </head>
+    <body id="main">
+        <div>
+            <a class="navbar-brand" href="/main" style="font-size: 72px;"><b>LP PHOTO</b>📷</a>
+            <p style="margin-top: 100px;"> </p>
+        </div>
+     
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+              <form action="#">
+                <h1>계정 생성하기</h1>
+                <div class="social-container">
+                  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                  <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>또는 계정 이용하기</span>
+                <input type="text" placeholder="닉네임" />
+                <input type="email" placeholder="이메일" />
+                <input type="password" placeholder="비밀번호" />
+                <input type="password" placeholder="비밀번호 확인" />
+                <button>회원 가입</button>
+              </form>
+            </div>
+            <div class="form-container sign-in-container">
+              <form action="#">
+                <h1>로그인</h1>
+                <div class="social-container">
+                  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                  <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>또는 계정 이용하기</span>
+                <input type="email" placeholder="이메일" />
+                <input type="password" placeholder="비밀번호" />
+                <a href="#">비밀번호 찾기</a>
+                <button>로그인</button>
+              </form>
+            </div>
+            <div class="overlay-container">
+              <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                  <h1>어서오세요!</h1>
+                  <p>환영합니다! 
+                   로그인을 통하여 더 많은 기능을 이용해보세요!</p>
+                  <button class="ghost" id="signIn">로그인</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                  <h1>안녕하세요!</h1>
+                  <p>회원가입을 통해 저희와 서로의 경험을 공유해보세요!</p>
+                  <button class="ghost" id="signUp">회원 가입</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          
+        <script>
+            const signUpButton = document.getElementById('signUp');
+            const signInButton = document.getElementById('signIn');
+            const container = document.getElementById('container');
+
+            signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+            });
+
+            signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+            });
+        </script>
+
+        {% include "footer.html" %}
+          
+    </body>
+</html>

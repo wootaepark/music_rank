@@ -15,6 +15,11 @@ router.get('/main',(req, res)=>{
 router.get('/upload',(req,res)=>{
     res.render('upload',{title : '업로드하기'});
 });
+router.get('/login',(req, res)=>{
+    res.render('login',{title : '로그인 하기'});
+})
+
+
 
 module.exports = router;
 
