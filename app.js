@@ -6,6 +6,8 @@ const indexRouter = require('./routes/index');
 const postRouter = require('./routes/post');
 const nunjucks = require('nunjucks');
 
+const {sequelize} = require('./models');
+
 dotenv.config();
 const app = express();
 
@@ -15,11 +17,19 @@ app.set('view engine','html');
 nunjucks.configure('views',{
     express : app,
     watch : true
-})
+});
+sequelize.sync({force : false})
+    .then(()=>{
+        console.log('데이터 베이스 연결 성공');
+    })
+    .catch((error)=>{
+        console.error(error);
+    })
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use(morgan('dev'));
-
+app.use(express.json());
+app.use(express.urlencoded({extended : false}));
 
 
 app.use('/',indexRouter);
