@@ -2,15 +2,20 @@ const express= require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 const morgan = require('morgan');
+const session = require('express-session');
 const indexRouter = require('./routes/index');
 const postRouter = require('./routes/post');
+const authRouter = require('./routes/auth');
 const nunjucks = require('nunjucks');
+const passport = require('passport');
+
 
 const {sequelize} = require('./models');
+const passportConfig = require('./passport');
 
 dotenv.config();
 const app = express();
-
+passportConfig();
 
 app.set('port', process.env.PORT || 3000);
 app.set('view engine','html');
@@ -30,10 +35,22 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
+app.use(session({
+    resave : false,
+    saveUninitialized : false,
+    secret : process.env.COOKIE_SECRET,
+    cookie : {
+        httpOnly : true,
+        secure : false,
+    },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
-app.use('/',indexRouter);
-app.use('/post',postRouter);
+app.use('/',indexRouter); // 페이지 이동 라우터
+app.use('/auth',authRouter); // 로그인 인증 라우터
+app.use('/post',postRouter); // 게시글 업로드 라우터
 
 
 app.use((req, res, next)=>{
