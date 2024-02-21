@@ -16,33 +16,33 @@
      
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-              <form action="#">
+              <form action="/auth/join" method="post">
                 <h1>계정 생성하기</h1>
                 <div class="social-container">
                   <a href="#" class="social">
-                    <img src="image/kakao.png" style="width: 200%; border-radius: 50%;">
+                    <img src="image/kakao.png" style="width: 200%; border-radius: 10%;">
                   </a>
                 </div>
                 <span>또는 계정 만들기
                 </span>
-                <input type="text" placeholder="닉네임" />
-                <input type="email" placeholder="이메일" />
-                <input type="password" placeholder="비밀번호" />
-                <input type="password" placeholder="비밀번호 확인" />
+                <input name="nick" type="text" placeholder="닉네임" />
+                <input name="email" type="email" placeholder="이메일" />
+                <input name="password" type="password" placeholder="비밀번호" />
+                <input name="password_check" type="password" placeholder="비밀번호 확인" />
                 <button>회원 가입</button>
               </form>
             </div>
             <div class="form-container sign-in-container">
-              <form action="#">
+              <form action="/auth/login" method="post">
                 <h1>로그인</h1>
                 <div class="social-container">
                   <a href="#" class="social">
-                    <img src="image/kakao.png" style="width: 200%; border-radius: 50%;">
+                    <img src="image/kakao.png" style="width: 200%; border-radius: 10%;">
                   </a>
                 </div>
                 <span>또는 계정 이용하기</span>
-                <input type="email" placeholder="이메일" />
-                <input type="password" placeholder="비밀번호" />
+                <input name="email" type="email" placeholder="이메일" />
+                <input name="password" type="password" placeholder="비밀번호" />
                 <a href="#">비밀번호 찾기</a>
                 <button>로그인</button>
               </form>

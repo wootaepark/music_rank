@@ -24,7 +24,7 @@ module.exports = () =>{
                 }
             }
             else{
-                done(null, flase, {message : '존재하지 않는 회원 입니다.'});
+                done(null, false, {message : '존재하지 않는 회원 입니다.'});
             }
 
 

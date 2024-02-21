@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const morgan = require('morgan');
 const session = require('express-session');
-const indexRouter = require('./routes/index');
+const pageRouter = require('./routes/page');
 const postRouter = require('./routes/post');
 const authRouter = require('./routes/auth');
 const nunjucks = require('nunjucks');
@@ -48,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/',indexRouter); // 페이지 이동 라우터
+app.use('/',pageRouter); // 페이지 이동 라우터
 app.use('/auth',authRouter); // 로그인 인증 라우터
 app.use('/post',postRouter); // 게시글 업로드 라우터
 
