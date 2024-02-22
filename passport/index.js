@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 module.exports = () =>{
     passport.serializeUser((user, done)=>{
-        done(null, user.id);
+        done(null, user.id); // session 에 저장할 정보 (user.id, 너무 많으면 오래 걸림)
     });
     passport.deserializeUser((id, done)=>{
         User.findOne({where : id})

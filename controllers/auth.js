@@ -36,13 +36,14 @@ exports.login = (req, res, next)=>{
             return next(authError);
         }
         if(!user){
-            return res.redirect(`/?error=${info.message}`);
+            return res.send(info.message);
         }
         return req.login(user, (loginError) =>{
             if(loginError){
                 console.error(loginError);
                 return next(loginError);
             }
+            
             return res.redirect('/main');
         });
     })(req, res, next);
