@@ -9,6 +9,7 @@
 
     </head>
     <body id="main">
+      
         <div>
             <a class="navbar-brand" href="/main" style="font-size: 72px;"><b>LP PHOTO</b>📷</a>
             <p style="margin-top: 100px;"> </p>
@@ -32,6 +33,8 @@
                 <button>회원 가입</button>
               </form>
             </div>
+
+
             <div class="form-container sign-in-container">
               <form action="/auth/login" method="post">
                 <h1>로그인</h1>
@@ -41,10 +44,15 @@
                   </a>
                 </div>
                 <span>또는 계정 이용하기</span>
+                <hr>
+                {% if message %}
+                  <span style="color : red;">로그인 오류</span>
+                {% endif %}
                 <input name="email" type="email" placeholder="이메일" />
                 <input name="password" type="password" placeholder="비밀번호" />
                 <a href="#">비밀번호 찾기</a>
                 <button>로그인</button>
+                
               </form>
             </div>
             <div class="overlay-container">
@@ -64,6 +72,8 @@
             </div>
           </div>
 
+        
+
 
           
         <script>
@@ -78,7 +88,12 @@
             signInButton.addEventListener('click', () => {
             container.classList.remove("right-panel-active");
             });
-        </script>
+
+    
+
+
+            
+              </script>
 
         {% include "footer.html" %}
           

@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require('../models/user');
 
+
+
 exports.join = async (req, res, next) =>{
     const {nick, email, password, password_check} = req.body;
     try{
@@ -31,12 +33,17 @@ exports.join = async (req, res, next) =>{
 
 exports.login = (req, res, next)=>{
     passport.authenticate('local', (authError, user, info) =>{
+       
         if(authError){
             console.error(authError);
             return next(authError);
         }
         if(!user){
-            return res.send(info.message);
+            
+            req.session.errorMessage='로그인 오류';
+            console.log(req.session.errorMessage);
+            return res.redirect('/login');
+
         }
         return req.login(user, (loginError) =>{
             if(loginError){

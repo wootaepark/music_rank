@@ -40,9 +40,11 @@ app.use(session({
     saveUninitialized : false,
     secret : process.env.COOKIE_SECRET,
     cookie : {
+        maxAge : 1000, // 세션 기간을 주면서 '로그인 오류' 메시지 저장 시간 조절
         httpOnly : true,
         secure : false,
     },
+    
 }));
 app.use(passport.initialize());
 app.use(passport.session());
