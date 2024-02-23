@@ -42,7 +42,7 @@ exports.login = (req, res, next)=>{
             
             req.session.errorMessage='로그인 오류';
             console.log(req.session.errorMessage);
-            return res.redirect('/login');
+            return res.redirect(`/login?error=${req.session.errorMessage}`);
 
         }
         return req.login(user, (loginError) =>{
