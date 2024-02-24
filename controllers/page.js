@@ -11,7 +11,7 @@ exports.renderTitle = (req, res) =>{
     res.render('index');
 }
 exports.renderMyPage = (req, res) =>{
-    res.render('myPage');
+    res.render('myPage',{title : '마이페이지'});
 }
 
 
