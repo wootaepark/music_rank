@@ -10,7 +10,9 @@ exports.renderLogin = (req, res) =>{
 exports.renderTitle = (req, res) =>{
     res.render('index');
 }
-
+exports.renderMyPage = (req, res) =>{
+    res.render('myPage');
+}
 
 
 

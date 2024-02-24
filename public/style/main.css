@@ -3,6 +3,7 @@
     z-index: 1;
     padding: 0px;
     position: fixed;
+    margin-bottom: 70px;
     width: 100%;
     top: 0px;
     z-index: 1000; /* 다른 요소 위로 표시되도록 설정 */

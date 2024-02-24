@@ -5,39 +5,50 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/upload"><b>업로드</b></a>
-              </li>
-              <li class="nav-item">
-                {% if user and user.id %}
-                <a class="nav-link" href="/auth/logout">로그아웃</a>
-                {% else %}
-                <a class="nav-link" href="/login">로그인</a>
-                {% endif %}
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <div class="row w-100 justify-content-center">
+              <div class="col-lg-3"> <!-- 가운데 정렬을 위한 그리드 컬럼 -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <!-- Dropdown 메뉴가 필요하면 여기에 추가 -->
                 </ul>
-              </li>
-              <li style="margin-left: 1000px;">
-                {% if user %}
-                <a class="nav-link" href="#"><b>{{user.nick}} </b>님 환영합니다.</a>
-                {% endif %}
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="분위기 #태그 검색" aria-label="Search" style="text-align: center;">
-              <button class="custom-btn btn-6" type="submit" style="width: 100px;">검색</button>
-            </form>
+              </div> 
+              <div class="col-lg-6 d-flex justify-content-center">
+                <form class="d-flex">
+                  <input class="form-control me-2 ml-100" type="search" placeholder="분위기 #태그 검색" aria-label="Search" style="text-align: center; width: 300px;">
+                  <button class="custom-btn btn-6" type="submit" style="width: 100px;">검색</button>
+                </form>
+              </div>
+            </div>
+
+        <div class="col-lg-3 text-end">
+        <ul class="navbar-nav ml-auto">
+          <!--
+        <li class="nav-item" style="margin-right: 100px;">
+            {% if user %}
+            <a class="navbar-brand nav-link"  href="#"><b>{{user.nick}} </b>님 환영합니다.</a>
+            {% endif %}
+          </li>
+        
+        -->
+        <li>
+          <li class="nav-item">
+            <a class="navbar-brand nav-link active" aria-current="page" href="/upload"><b>업로드</b></a>
+          </li>     
+          <li class="nav-item">
+            {% if user and user.id %}
+            <a class="navbar-brand nav-link" href="/auth/logout">로그아웃</a>
+            {% else %}
+            <a class="navbar-brand nav-link" href="/login">로그인</a>
+            {% endif %}
+          </li>
+          {% if user and user.id %}
+          <li>
+            <a class="navbar-brand nav-link" href="/mypage">마이페이지</a>
+          </li>
+        </li>
+          {% endif %}
+          </ul>
           </div>
         </div>
       </nav>
