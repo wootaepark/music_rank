@@ -1,6 +1,6 @@
 const express = require('express');
 const {isLoggedIn, isNotLoggedIn} = require('../middlewares');
-const {renderTitle, renderMain, renderUpload, renderLogin,renderMyPage} = require('../controllers/page');
+const {renderTitle, renderMain, renderUpload, renderLogin,renderMyPage, renderPost} = require('../controllers/page');
 
 const router = express.Router();
 
@@ -14,6 +14,7 @@ router.get('/main',renderMain);
 router.get('/upload',isLoggedIn,renderUpload);
 router.get('/login',isNotLoggedIn,renderLogin);
 router.get('/mypage',isLoggedIn ,renderMyPage);
+router.get('/upload/:id',renderPost);
 
 module.exports = router;
 

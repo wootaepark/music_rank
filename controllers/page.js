@@ -1,3 +1,5 @@
+const User = require('../models/user');
+
 exports.renderMain = (req, res) =>{
     res.render('main');
 }
@@ -12,6 +14,24 @@ exports.renderTitle = (req, res) =>{
 }
 exports.renderMyPage = (req, res) =>{
     res.render('myPage',{title : '마이페이지'});
+    
+}
+exports.renderPost = async  (req, res, next) =>{
+
+    try{
+        const user = await User.findOne({where : {id : req.user.id}});
+        if(req.user.id === parseInt(req.params.id,10)){
+            res.locals.email = req.user.eamil;
+            res.render('post');
+        }
+    }
+    catch(error){
+        console.error(error);
+        next(error);
+
+    }
+    
+    
 }
 
 
