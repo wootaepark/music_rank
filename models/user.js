@@ -18,7 +18,7 @@ class User extends Sequelize.Model{
             email:{
                 type : Sequelize.STRING(50),
                 allowNull : false,
-                unique : false,
+                unique : true,
 
             },
             password:{

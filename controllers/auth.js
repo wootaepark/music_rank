@@ -51,6 +51,7 @@ exports.login = (req, res, next)=>{
                 return next(loginError);
             }
             
+           
             return res.redirect('/main');
         });
     })(req, res, next);
@@ -58,6 +59,7 @@ exports.login = (req, res, next)=>{
 
 exports.logout = (req, res, next) =>{
     req.logout(()=>{
-         res.redirect('/main');
+        
+        res.redirect('/main');
     });
 };

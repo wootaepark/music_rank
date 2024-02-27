@@ -30,6 +30,7 @@ exports.createPost = async (req, res, next) =>{
 
 
         });
+        
         return res.redirect('/');
 
     }

@@ -21,7 +21,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine','html');
 nunjucks.configure('views',{
     express : app,
-    watch : true
+    watch : true,
 });
 sequelize.sync({force : false})
     .then(()=>{
@@ -32,6 +32,7 @@ sequelize.sync({force : false})
     })
 
 app.use(express.static(path.join(__dirname,'public')));
+app.use('/img',express.static(path.join(__dirname,'uploads')));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
@@ -40,7 +41,7 @@ app.use(session({
     saveUninitialized : false,
     secret : process.env.COOKIE_SECRET,
     cookie : {
-        //maxAge : 1000, // 세션 기간을 주면서 '로그인 오류' 메시지 저장 시간 조절
+
         httpOnly : true,
         secure : false,
     },
@@ -53,6 +54,7 @@ app.use(passport.session());
 app.use('/',pageRouter); // 페이지 이동 라우터
 app.use('/auth',authRouter); // 로그인 인증 라우터
 app.use('/post',postRouter); // 게시글 업로드 라우터
+
 
 
 app.use((req, res, next)=>{
@@ -69,6 +71,7 @@ app.use((err,req,res,next)=>{
     res.status(err.status || 500);
     res.render('error');
 })
+
 
 app.listen(app.get('port'),()=>{
     console.log(app.get('port'), '번 포트에서 서버 대기 중');

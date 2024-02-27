@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 
 exports.renderMain = (req, res) =>{
     res.render('main');
@@ -12,10 +13,33 @@ exports.renderLogin = (req, res) =>{
 exports.renderTitle = (req, res) =>{
     res.render('index');
 }
-exports.renderMyPage = (req, res) =>{
-    res.render('myPage',{title : '마이페이지'});
+exports.renderMyPage = async (req, res, next) =>{
+
+    try{
+        
+        const posts = await Post.findAll({
+            where : {poster : req.user.id},
+        include : {
+            model : User,
+            attributes : ['id','nick'],
+        },
+        order : [['createdAt', 'DESC']],
+    
+    });
+    
+        return res.render('myPage',{
+            title : '마이페이지',
+            user : req.user,
+            twits : posts,
+        })
+    }
+    catch(error){
+        console.error(error);
+        next(error);
+    }
     
 }
+
 exports.renderPost = async  (req, res, next) =>{
 
     try{
