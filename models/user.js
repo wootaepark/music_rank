@@ -51,7 +51,7 @@ class User extends Sequelize.Model{
     }
 
     static associate(db){
-        
+        db.User.hasMany(db.Post,{foreignKey : 'poster', sourceKey : 'id'});
     }
 };
 module.exports = User;

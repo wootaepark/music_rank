@@ -11,7 +11,7 @@ exports.join = async (req, res, next) =>{
         const nxUser = await User.findOne({where : {nick}}); // 닉네임 중복 체크
 
         if(exUser || nxUser){
-            return res.redirect('/login/error=exist');
+            return res.redirect('/login?error=exist');
         }
         if(password !== password_check){
             return res.redirect('/login');

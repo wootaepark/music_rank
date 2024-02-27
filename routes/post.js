@@ -2,7 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-
+const {createPost} = require('../controllers/post');
+const {isLoggedIn} = require('../middlewares')
 
 const router = express.Router();
 
@@ -29,17 +30,8 @@ const upload = multer({
 
 
 
-router.post('/img', upload.single('img'),(req,res,next)=>{
-    try{
-        res.redirect('/main');
-    }
-    catch(error){
-        console.error(error);
-        next(error);
-    }
-    
-    
-});
+// post/upload
+router.post('/upload',isLoggedIn,upload.single('img'),createPost);
 
 
 

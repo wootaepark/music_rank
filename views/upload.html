@@ -65,6 +65,12 @@
             selectedFileText.textContent = '선택된 파일 없음';
         }
     }
+
+             window.onload =() =>{
+              if(new URL(location.href).searchParams.get('error')){
+                alert(new URL(location.href).searchParams.get('error'));
+              }
+            }
         </script>
         <style>
             .custom-file-input {
@@ -92,20 +98,23 @@
     <body id="main">
         {% include "header.html" %}
         <div style="margin-top : 10%; text-align: center;">
-            <h2 style="margin-bottom: 50px;"><b>사진 업로드 하기</b></h2>
-
-            <form class="photo-upload" action="/post/img" method="post" enctype="multipart/form-data">
+            <h2 style="margin-bottom: 10px;"><b>사진 업로드 하기</b></h2>
+            <h3>🖼️</h3>
+                <hr>
+            <form class="photo-upload" action="/post/upload" method="post" enctype="multipart/form-data">
                 <div class="container">
-                    <div>
+                    <div style="margin-bottom : 30px;">
                         <input id="fileInput" name="img" type="file" class="custom-file-input" accept="image/*" onchange="displaySelectedFile()">
+                        <input id="img-url" type="hidden" name="url">
                         <label for="fileInput" class="custom-button">이미지 추가하기</label>
                         <div id="selectedFileText" class="selected-file-text"></div>
-                    <hr>
+                    
                     </div>
                    
-                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 50px;">
-                        <textarea id="twit" name="content" maxlength="200" placeholder="태그 또는 내용 입력" style="resize: none;"></textarea>
-                        <button type="submit" class="upload-button" style="margin-left: 10px;">업로드</button>
+                    <div style="display : flex; align-items: center; justify-content: center; margin-bottom: 50px;flex-direction: column;">
+                        <textarea name="title" maxlength="100" style="width: 500px; resize: none; margin-bottom: 20px;" placeholder="제목 및 태그"></textarea>
+                        <textarea id="twit" name="content" maxlength="1000" placeholder="내용 입력" style="resize: none; height: 100px; width: 500px;"></textarea>
+                        <button type="submit" class="upload-button" style="margin-left: 10px; margin-top: 20px;">업로드</button>
                     </div>
                         
                     <div class="frame"></div>
