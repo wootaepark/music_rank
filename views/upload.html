@@ -16,16 +16,7 @@
             const fileInput = container.querySelector('input[type="file"]');
             const form = document.querySelector('.photo-upload');
 
-            form.addEventListener('submit', (event) => {
-            const titleInput = document.querySelector('textarea[name="title"]');
-            
-            // 제목이 입력되지 않은 경우 체크
-            if (!titleInput.value.trim()) {
-                event.preventDefault(); // 폼 제출 방지
-                alert('제목을 입력하세요.'); 
-            }
-            
-        });
+           
             
             fileInput.addEventListener('input', () => {
                 
@@ -53,6 +44,17 @@
                 reader.readAsDataURL(fileInput.files[0]);
             });
             
+
+            form.addEventListener('submit', (event) => {
+            const titleInput = document.querySelector('textarea[name="title"]');
+            
+            // 제목이 입력되지 않은 경우 체크
+            if (!titleInput.value.trim()) {
+                event.preventDefault(); // 폼 제출 방지
+                alert('제목을 입력하세요.'); 
+            }
+            
+        });
             form.addEventListener('submit', (event) => {
                 if (!fileInput.files.length || !isImage(fileInput.files[0])) {
                     event.preventDefault(); // 이미지가 선택되지 않았거나 이미지가 아닌 경우 제출 방지
