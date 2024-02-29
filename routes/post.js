@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const {createPost, deletePost} = require('../controllers/post');
+const {getPost,createPost, deletePost} = require('../controllers/post');
 const {isLoggedIn} = require('../middlewares')
 
 const router = express.Router();
@@ -30,9 +30,11 @@ const upload = multer({
 
 
 
+// GET post/id
+router.get('/:id', isLoggedIn, getPost);
+
 // POST post/upload
 router.post('/upload',isLoggedIn,upload.single('img'),createPost);
-
 
 // PATCH post/:id
 // DELETE post/:id

@@ -6,7 +6,15 @@ exports.afterUploadImg = (req,res,next) =>{
     
     
 }
-
+exports.getPost = async (req, res, next) =>{
+    try{
+        const post = Post.findOne({where : {id : req.params.id}});
+        res.json(post);
+    }
+    catch(error){
+        console.error(error);
+    }
+}
 
 exports.createPost = async (req, res, next) =>{
     const{img, title, content } = req.body; // 이때 순서가 form 에 지정된 name 속성의 순서여야 한다.
@@ -32,7 +40,7 @@ exports.createPost = async (req, res, next) =>{
 
         });
         
-        return res.redirect('/');
+        return res.redirect('/mypage');
 
     }
     catch(error){
@@ -46,7 +54,7 @@ exports.createPost = async (req, res, next) =>{
 
 exports.patchPost = async (req,res, next) =>{
     try{
-        const post = await Post.findOne({where : {postId : req.parmas.id}});
+        const post = await Post.findOne({where : {id : req.params.id}});
         if(post){
             
 
@@ -60,16 +68,21 @@ exports.patchPost = async (req,res, next) =>{
     }
 }
 
+
+
 exports.deletePost = async (req, res, next)=>{
     try{
-        const post = await Post.findOne({where : {postId : req.params.id}});
-        if(post){
+        const post = await Post.findOne({
+            where : {id: req.params.id},
+        });
+        if(post && req.user.id === post.poster){ // 해당 게시글을 게시한 사람과 현재 유저의 id 값이 같아야 삭제가 가능하도록
             await Post.destroy({
-                where : {postId : req.params.id}
+                where : {id : req.params.id}
             });
+           return res.status(200).json({message:'삭제 완료'});
         }
         else{
-            res.status(404).json({message : '해당 포스트가 존재 하지 않습니다.'});
+           return res.status(404).json({message : '해당 포스트가 존재 하지 않습니다.'});
         }
 
 

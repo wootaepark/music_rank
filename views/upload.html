@@ -52,6 +52,7 @@
             if (!titleInput.value.trim()) {
                 event.preventDefault(); // 폼 제출 방지
                 alert('제목을 입력하세요.'); 
+                return;
             }
             
         });
@@ -59,7 +60,16 @@
                 if (!fileInput.files.length || !isImage(fileInput.files[0])) {
                     event.preventDefault(); // 이미지가 선택되지 않았거나 이미지가 아닌 경우 제출 방지
                     alert('이미지를 선택하세요.');
+                    return;
                 }
+
+                const confirmResult = confirm('정말로 업로드 하시겠습니까?');
+                if (!confirmResult) {
+                    event.preventDefault();
+                }
+
+                // 선택 되지 않은 경우 폼 제출 방지
+
             });
 
             
@@ -127,12 +137,14 @@
                     <div style="display : flex; align-items: center; justify-content: center; margin-bottom: 50px;flex-direction: column;">
                         <textarea name="title" maxlength="100" style="width: 500px; resize: none; margin-bottom: 20px;" placeholder="제목 및 태그"></textarea>
                         <textarea id="twit" name="content" maxlength="1000" placeholder="내용 입력" style="resize: none; height: 100px; width: 500px;"></textarea>
-                        <button type="submit" class="upload-button" style="margin-left: 10px; margin-top: 20px;">업로드</button>
+                        <button id="postButton" type="submit" class="upload-button" style="margin-left: 10px; margin-top: 20px;">업로드</button>
                     </div>
                         
                     <div class="frame"></div>
                 </div>
             </form>
+
+           
 
              
               

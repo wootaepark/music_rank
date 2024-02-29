@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="style/main.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     </head>
     <body id="main">
@@ -17,6 +18,16 @@
         <div id="title" style="margin-bottom: 100px;">
             <h1 style="margin-left: 33%; "><b>{{user.nick}} 님의 사진첩</b> 📖</h1>
         </div>
+
+      
+        
+        
+        {% if twits.length == 0 %}
+        <div style="display: flex;  flex-direction: column; justify-content: center; align-items: center;">
+            <h2 style="text-align: center; color:gray">게시물이 존재하지 않습니다.</h2>
+            <img src="image/empty_page.png" alt ="우는 이미지">
+        </div>
+        {% endif %}
 
 
         {% for twit in twits %}
@@ -27,9 +38,47 @@
             <div>
                 <img src="{{twit.img}}" alt="썸네일">
             </div>
-            <button>삭제하기</button>
+
+            <button>
+                <a href="/modify/:id">수정하기</a>
+            </button>
+
+
+            <button type="button" class="delete-post-btn" data-post-id="{{twit.id}}">
+                삭제
+            </button>
+            
+            {% endfor %}
+
+
+
+            <script>
+                const deleteButtons = document.querySelectorAll('.delete-post-btn');
+               
+                deleteButtons.forEach(button =>{
+                    button.addEventListener('click', async () =>{
+                        const postId = button.dataset.postId;
+                        try{
+                            const check = confirm('정말로 삭제하시겠습니까?');
+                            if(check){
+                                await axios.delete(`/post/${postId}`);
+                                window.location.href = '/mypage';
+                            }
+                            
+                            
+                        }
+                        catch(err){
+                            console.error(err);
+                        }
+                    });
+                })
+                
+                
+            </script>
+
+
         </div>
-        {% endfor %}
+        
 
         
       
