@@ -53,7 +53,7 @@ app.use(passport.session());
 
 app.use('/',pageRouter); // 페이지 이동 라우터
 app.use('/auth',authRouter); // 로그인 인증 라우터
-app.use('/post',postRouter); // 게시글 업로드 라우터
+app.use('/post',postRouter); // 게시글 관리 라우터
 
 
 

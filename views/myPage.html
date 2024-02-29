@@ -17,14 +17,17 @@
         <div id="title" style="margin-bottom: 100px;">
             <h1 style="margin-left: 33%; "><b>{{user.nick}} 님의 사진첩</b> 📖</h1>
         </div>
+
+
         {% for twit in twits %}
         <hr>
         <div style="display: flex;  flex-direction: column; justify-content: center; align-items: center;">
-            <div>{{twit.title}}</div>
+            <div><b>{{twit.title}}</b></div>
             <div>{{twit.content}}</div>
             <div>
                 <img src="{{twit.img}}" alt="썸네일">
             </div>
+            <button>삭제하기</button>
         </div>
         {% endfor %}
 

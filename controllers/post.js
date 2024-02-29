@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+
 exports.afterUploadImg = (req,res,next) =>{
     console.log(req.file);
     res.json({url : `/img/${req.file.filename}`});
@@ -43,3 +44,38 @@ exports.createPost = async (req, res, next) =>{
 
 }
 
+exports.patchPost = async (req,res, next) =>{
+    try{
+        const post = await Post.findOne({where : {postId : req.parmas.id}});
+        if(post){
+            
+
+        }
+        else{
+            res.status(404).json({message : '해당하는 포스트가 없습니다.'});
+        }
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
+}
+
+exports.deletePost = async (req, res, next)=>{
+    try{
+        const post = await Post.findOne({where : {postId : req.params.id}});
+        if(post){
+            await Post.destroy({
+                where : {postId : req.params.id}
+            });
+        }
+        else{
+            res.status(404).json({message : '해당 포스트가 존재 하지 않습니다.'});
+        }
+
+
+    }
+    catch(error){
+        console.error(error);
+        next(error);
+    }
+}

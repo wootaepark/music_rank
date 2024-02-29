@@ -20,6 +20,7 @@ class Post extends Sequelize.Model{
             postId : {
                 type : Sequelize.STRING(10),
                 allowNull : false,
+                unique : true,
             }
 
 
