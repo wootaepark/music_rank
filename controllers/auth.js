@@ -10,11 +10,24 @@ exports.join = async (req, res, next) =>{
         const exUser = await User.findOne({where : {email}}); // 이메일 중복 체크
         const nxUser = await User.findOne({where : {nick}}); // 닉네임 중복 체크
 
-        if(exUser || nxUser){
-            return res.redirect('/login?error=exist');
+        if(!nick){
+            return res.redirect('/login?error=닉네임은 필수 입니다.');
+        }
+        if(!email){
+            return res.redirect('/login?error=이메일은 필수 입니다.');
+        }
+        if(!password){
+            return res.redirect('/login?error=비밀번호를 입력하세요');
+        }
+
+        if(exUser){
+            return res.redirect('/login?error=이메일이 존재합니다.');
+        }
+        if(nxUser){
+            return res.redirect('/login?error=닉네임이 존재합니다.');
         }
         if(password !== password_check){
-            return res.redirect('/login');
+            return res.redirect('/login?error=비밀번호를 확인해주세요.');
         }
         const hash = await bcrypt.hash(password,12);
         await User.create({
