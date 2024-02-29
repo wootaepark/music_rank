@@ -2,8 +2,9 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const {getPost,createPost, deletePost} = require('../controllers/post');
+const {getPost,createPost,patchPost, deletePost} = require('../controllers/post');
 const {isLoggedIn} = require('../middlewares')
+
 
 const router = express.Router();
 
@@ -36,11 +37,13 @@ router.get('/:id', isLoggedIn, getPost);
 // POST post/upload
 router.post('/upload',isLoggedIn,upload.single('img'),createPost);
 
+
+
 // PATCH post/:id
 // DELETE post/:id
 
 router.route('/:id')
-.patch()
+.patch(isLoggedIn,upload.single('img'),patchPost)
 .delete(isLoggedIn, deletePost);
 
 
