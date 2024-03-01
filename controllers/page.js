@@ -43,10 +43,15 @@ exports.renderMyPage = async (req, res, next) =>{
 exports.renderPost = async  (req, res, next) =>{
 
     try{
-        const user = await User.findOne({where : {id : req.user.id}});
-        if(req.user.id === parseInt(req.params.id,10)){
-            res.locals.email = req.user.eamil;
-            res.render('post');
+        const post = await Post.findOne({where : {id : req.params.id}});
+        if(post && req.user.id === post.poster){
+
+            
+            res.render('modify-post');
+
+        }
+        else{
+            res.status(400).json({error : '권한이 없습니다.'});
         }
     }
     catch(error){
@@ -55,8 +60,7 @@ exports.renderPost = async  (req, res, next) =>{
 
     }
     
-    // 게시물 각각에 고유 아이디를 놓고
-    // 리스트를 페이지별로 나누는 것을 /1 /2 식으로 해야할듯
+  
     
     
 }

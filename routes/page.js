@@ -14,7 +14,7 @@ router.get('/main',renderMain);
 router.get('/upload',isLoggedIn,renderUpload);
 router.get('/login',isNotLoggedIn,renderLogin);
 router.get('/mypage',isLoggedIn ,renderMyPage);
-//router.get('/upload/:id',renderPost);
+router.get('/modify-post/:id',isLoggedIn,renderPost);
 
 module.exports = router;
 

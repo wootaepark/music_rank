@@ -10,7 +10,7 @@ exports.afterUploadImg = (req,res,next) =>{
 exports.getPost = async (req, res, next) =>{
     try{
         const post = Post.findOne({where : {id : req.params.id}});
-        res.json(post);
+        res.json({data : post});
     }
     catch(error){
         console.error(error);
