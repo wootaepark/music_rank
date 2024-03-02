@@ -57,13 +57,18 @@ exports.patchPost = async (req,res, next) =>{
     const{img, title, content } = req.body; 
     try{
         const post = await Post.findOne({where : {id : req.params.id}});
+
         let oldImage = await post.img;
         oldImage = oldImage.substring(5);
-        deleteImage(__dirname,oldImage);    
+        
+        if(img !== post.img){
+            deleteImage(__dirname,oldImage);  
+        }
+          
 
         if(post && req.user.id === post.poster){
             await Post.update({
-                title : req.body.title,
+                title,
                 content,
                 img :`/img/${req.file.filename}`,
             },{
@@ -78,7 +83,7 @@ exports.patchPost = async (req,res, next) =>{
                 console.error(error);
             });
             
-            return res.redirect('/mypage');
+            res.json({ success: true, redirectUrl: '/mypage' });
 
         }
         else{

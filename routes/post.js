@@ -29,10 +29,24 @@ const upload = multer({
     limits : {fileSize : 5*1024*1024}
 });
 
+const changeImg = multer({
+    storage: multer.diskStorage({
+        destination(req, file, cb){
+            cb(null, 'uploads/');
+        },
+        filename(req, file, cb){
+            const ext = path.extname(file.originalname);
+            cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+        },
+    }),
+    limits : {fileSize : 5*1024*1024}
+});
 
 
-// GET post/id
-router.get('/:id', isLoggedIn, getPost);
+
+
+// GET post/:id/img
+router.get('/:id/img', isLoggedIn, getPost);
 
 // POST post/upload
 router.post('/upload',isLoggedIn,upload.single('img'),createPost);
@@ -43,8 +57,8 @@ router.post('/upload',isLoggedIn,upload.single('img'),createPost);
 // DELETE post/:id
 
 router.route('/:id')
-.patch(isLoggedIn,upload.single('img'),patchPost)
-.delete(isLoggedIn, deletePost);
+    .patch(isLoggedIn,upload.single('img'),patchPost)
+    .delete(isLoggedIn, deletePost);
 
 
 module.exports = router;

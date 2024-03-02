@@ -14,6 +14,12 @@
     <!-- 기존 CSS 및 스타일링 추가 -->
 
     <script>
+
+        function isImage(file) {
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            const extension = file.name.split('.').pop().toLowerCase();
+            return imageExtensions.includes(extension);
+        }
         window.addEventListener('load', function () {
             // 기존 업로드 페이지의 스크립트 복사 및 필요한 수정 수행
             
@@ -21,20 +27,75 @@
 
             // 폼이 submit 될 때의 이벤트 리스너 추가
             const form = document.querySelector('.photo-upload');
+            const container = document.querySelector('.container');
+            const frame = container.querySelector('.frame');
+            const fileInput = container.querySelector('input[type="file"]');
+
+            
+            
+
+
+            fileInput.addEventListener('input', () => {
+                
+                const previousImage = frame.querySelector('.thumbnail');
+                if (previousImage) {
+                    frame.removeChild(previousImage);
+                }
+
+                if (!isImage(fileInput.files[0])) {
+                    alert('Image 파일만 업로드 할 수 있습니다.');
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.addEventListener('load', () => {
+                    const img = document.createElement('IMG');
+                    img.classList.add('thumbnail');
+                    img.src = reader.result;
+
+                    frame.insertAdjacentElement('beforeend', img);
+                });
+
+                reader.readAsDataURL(fileInput.files[0]);
+                });
+
+
+
+
+              
+    
 
             form.addEventListener('submit', (event) => {
                 const titleInput = document.querySelector('textarea[name="title"]');
                 // 제목이 입력되지 않은 경우 체크
-                if (!titleInput.value.trim()) {
+                if (titleInput.value.trim()) {
                     event.preventDefault(); // 폼 제출 방지
                     alert('제목을 입력하세요.');
                     return;
                 }
                 // 추가로 필요한 검증 또는 수정 로직 수행
             });
+
+        form.addEventListener('submit', (event) => {
+                if (!fileInput.files.length || !isImage(fileInput.files[0])) {
+                    event.preventDefault(); // 이미지가 선택되지 않았거나 이미지가 아닌 경우 제출 방지
+                    alert('이미지를 선택하세요.');
+                    return;
+                }
+
+                const confirmResult = confirm('정말로 업로드 하시겠습니까?');
+                if (!confirmResult) {
+                    event.preventDefault();
+                }
+
+                // 선택 되지 않은 경우 폼 제출 방지
+
+            });
+
             
         });
-
+        
         // 기존 displaySelectedFile 함수 유지
 
         window.onload = () => {
@@ -45,7 +106,25 @@
     </script>
 
     <style>
-        /* 기존 CSS 및 스타일링 유지 및 추가 */
+        .custom-file-input {
+            display: none;
+        }
+        .custom-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .upload-button {
+            background-color: #8076bb;
+            color: #fff;
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
     </style>
 
 </head>
@@ -56,51 +135,116 @@
         <h2 style="margin-bottom: 10px;"><b>수정하기</b></h2>
         <h3>🖼️</h3>
         <hr>
-        <form id="modify-post" class="modify-post" enctype="multipart/form-data">
+        <form id="modify-post" class="modify-post" method ="patch" enctype="multipart/form-data">
             <div class="container">
                 <div style="margin-bottom: 30px;">
                     <input id="fileInput" name="img" type="file" class="custom-file-input" accept="image/*"
                         onchange="displaySelectedFile()">
+                        <input id="img-url" type="hidden" name="url">
+                        <label for="fileInput" class="custom-button">이미지 변경하기</label>
                     <input id="img-url" type="hidden" name="url">
-                    <label for="fileInput" class="custom-button">이미지 수정하기</label>
                     <div id="selectedFileText" class="selected-file-text"></div>
                 </div>
 
                 <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 50px;flex-direction: column;">
                     <span>제목</span>
                     <textarea name="title" maxlength="100" style="width: 500px; resize: none; margin-bottom: 20px;"
-                        placeholder="제목 및 태그">{{post.title}}</textarea>
+                        placeholder="제목 및 태그" required>{{post.title}}</textarea>
 
 
                         <span>내용</span>
                     <textarea id="twit" name="content" maxlength="1000" placeholder="내용 입력"
                         style="resize: none; height: 100px; width: 500px;">{{post.content}}</textarea>
-                    <button id="postButton" type="submit" class="upload-button" onclick="submitForm()"
+                    <button id="postButton" type="button" class="upload-button" onclick="submitForm()"
                         style="margin-left: 10px; margin-top: 20px;">수정 완료</button>
                 </div>
 
                 <div class="frame">
 
                     <!-- 기존에 업로드된 이미지를 표시하는 부분 -->
-                    {% if post.image_url %}
-                        <img src="{{post.img}}" alt="Uploaded Image" class="thumbnail">
-                    {% endif %}
+                    {% if post.img %}
+                        <img id="existingImage" src="{{post.img}}" name="img" alt="Uploaded Image">
+                    {% endif %}                    
+                    
+
                 </div>
-            </div>
+            </div>  
         </form>
 
         <script>
+            let isExistingImageRemoved = false;
+            
             function submitForm() {
-              const form = document.getElementById('modify-post');
-              const formData = new FormData(form);
+                const titleInput = document.querySelector('textarea[name="title"]');
+                const imgInput = document.querySelector('input[type="file"]');
 
-              axios.patch('/post/{{post.id}}', formData)
-                .then(response => {
-                  console.log('수정 성공', response.data);
-                })
-                .catch(error => {
-                  console.error('수정 실패:', error);
-                });
+                if (!titleInput.value.trim()) {
+                alert('제목을 입력하세요.');
+                return;
+            }
+
+                if(!imgInput.value.trim()){
+                    alert('이미지를 넣으세요.');
+                    return;
+                }
+
+                const confirmResult = confirm('수정하시겠습니까?');
+                if(confirmResult){
+                    const form = document.getElementById('modify-post');
+                    const formData = new FormData(form);
+
+                    axios.patch(`/post/{{post.id}}`, formData)
+                        .then(response => {
+                        console.log('수정 성공', response.data);
+                        location.href = '/mypage';
+                        })
+                        .catch(error => {
+                        alert('수정 실패');
+                        console.error('수정 실패:', error);
+                        window.location.href = '/mypage';
+                        });
+                }
+                else{
+                    console.log('수정 취소');
+                }
+
+
+              
+            }
+            const form = document.getElementById('modify-post');
+            form.addEventListener('submit', function (event) {
+            event.preventDefault(); // 기본 폼 제출 동작 막기
+            submitForm();
+    });
+
+
+
+
+            function displaySelectedFile() {
+                const fileInput = document.getElementById('fileInput');
+                const previewImage = document.getElementById('previewImage');
+                const existingImage = document.getElementById('existingImage');
+
+                
+
+                if (fileInput.files.length > 0) {
+
+                    if (existingImage) {
+                        existingImage.remove();
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'inline';
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    // 파일이 선택되지 않은 경우 기존 미리보기를 지웁니다.
+                    
+                    previewImage.src = '';
+                    previewImage.style.display = 'none';
+                }
             }
           </script>
     </div>
