@@ -65,7 +65,7 @@ exports.patchPost = async (req,res, next) =>{
             await Post.update({
                 title : req.body.title,
                 content,
-                img : `/img/${req.file.filename}`,
+                img :`/img/${req.file.filename}`,
             },{
                 where : {
                     id : req.params.id,

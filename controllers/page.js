@@ -46,7 +46,7 @@ exports.renderPost = async  (req, res, next) =>{
         const post = await Post.findOne({where : {id : req.params.id}});
         if(post && req.user.id === post.poster){
 
-            
+            res.locals.post = post;
             res.render('modify-post');
 
         }
