@@ -60,10 +60,6 @@
                 reader.readAsDataURL(fileInput.files[0]);
                 });
 
-
-
-
-              
     
 
             form.addEventListener('submit', (event) => {
@@ -80,7 +76,7 @@
         form.addEventListener('submit', (event) => {
                 if (!fileInput.files.length || !isImage(fileInput.files[0])) {
                     event.preventDefault(); // 이미지가 선택되지 않았거나 이미지가 아닌 경우 제출 방지
-                    alert('이미지를 선택하세요.');
+                    alert('이미지를 선택하세요.');  
                     return;
                 }
 
@@ -151,6 +147,7 @@
                     <textarea name="title" maxlength="100" style="width: 500px; resize: none; margin-bottom: 20px;"
                         placeholder="제목 및 태그" required>{{post.title}}</textarea>
 
+                        
 
                         <span>내용</span>
                     <textarea id="twit" name="content" maxlength="1000" placeholder="내용 입력"
@@ -183,10 +180,7 @@
                 return;
             }
 
-                if(!imgInput.value.trim()){
-                    alert('이미지를 넣으세요.');
-                    return;
-                }
+                
 
                 const confirmResult = confirm('수정하시겠습니까?');
                 if(confirmResult){

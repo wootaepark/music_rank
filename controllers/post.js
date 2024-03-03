@@ -53,24 +53,24 @@ exports.createPost = async (req, res, next) =>{
 
 }
 
-exports.patchPost = async (req,res, next) =>{
+exports.patchPost = async (req, res, next) =>{
     const{img, title, content } = req.body; 
+    
     try{
         const post = await Post.findOne({where : {id : req.params.id}});
 
         let oldImage = await post.img;
         oldImage = oldImage.substring(5);
         
-        if(img !== post.img){
-            deleteImage(__dirname,oldImage);  
-        }
           
 
         if(post && req.user.id === post.poster){
+            //deleteImage(__dirname,oldImage);
+            
             await Post.update({
                 title,
                 content,
-                img :`/img/${req.file.filename}`,
+                img : !req.file ? post.img :`/img/${req.file.filename}`
             },{
                 where : {
                     id : req.params.id,
@@ -85,6 +85,25 @@ exports.patchPost = async (req,res, next) =>{
             
             res.json({ success: true, redirectUrl: '/mypage' });
 
+        }
+        else if(post && img === null){
+            await Post.update({
+                title,
+                content,
+                img :post.img,
+            },{
+                where : {
+                    id : req.params.id,
+                }
+            })
+            .then((result)=>{
+                console.log(result);
+            })
+            .catch((error)=>{
+                console.error(error);
+            });
+            
+            res.json({ success: true, redirectUrl: '/mypage' });
         }
         else{
             return res.status(404).json({message : '해당하는 포스트가 없습니다.'});
