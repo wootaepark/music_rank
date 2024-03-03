@@ -65,12 +65,15 @@ exports.patchPost = async (req, res, next) =>{
           
 
         if(post && req.user.id === post.poster){
-            //deleteImage(__dirname,oldImage);
+            if(req.file){
+                deleteImage(__dirname,oldImage);
+            }
+            
             
             await Post.update({
                 title,
                 content,
-                img : !req.file ? post.img :`/img/${req.file.filename}`
+                img : !req.file ? post.img :`/img/${req.file.filename}`,
             },{
                 where : {
                     id : req.params.id,
@@ -121,10 +124,15 @@ exports.deletePost = async (req, res, next)=>{
         const post = await Post.findOne({
             where : {id: req.params.id},
         });
+
+        let oldImage = post.img;
+        oldImage = oldImage.substring(5);
+
         if(post && req.user.id === post.poster){ // 해당 게시글을 게시한 사람과 현재 유저의 id 값이 같아야 삭제가 가능하도록
             await Post.destroy({
                 where : {id : req.params.id}
             });
+            deleteImage(__dirname,oldImage);    
            return res.status(200).json({message:'삭제 완료'});
         }
         else{
