@@ -20,21 +20,41 @@
         {% if user and user.id  %}
         <div style="margin-left: 66%; margin-bottom: 50px;">
             <label>
-                내 글 보기 <input type="checkbox">
+                내 글 안보기 <input type="checkbox">
             </label>
         </div>
         {% endif %}
 
         
-        <div style="display: flex;  flex-direction: column; justify-content: center; align-items: center;">
-            <h2>사진 1</h2>
-            
-            <a href="mypage/">링크 1</a>
+        
+        <div style="background-color: aliceblue; width: 50%; margin: 0 auto; border-radius: 3%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+            <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                <!-- 헤더 행 -->
+                <tr style="background-color: #f2f2f2;">
+                    <td style="padding: 10px;"><b>게시물 번호</b></td>
+                    <td style="padding: 10px;"><b>제목</b></td>
+                    <td style="padding: 10px;"><b>글쓴이</b></td>
+                    <td style="padding: 10px;"><b>좋아요</b></td>
+                    <td style="padding: 10px;"><b>업로드</b></td>
+                </tr>
+        
+                <!-- 포스트 반복 루프 -->
+                {% for post in posts %}
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;">{{post.postId}}</td>
+                        <td style="padding: 10px;"><a href="#" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'" style="text-decoration: none; color:black;">{{post.title}}</a></td>
+                        <td style="padding: 10px;">{{post.User.nick}}</td>
+                        <!-- 여기에 좋아요 및 업로드 시간 속성 추가 -->
+                        <td style="padding: 10px;">0</td>
+                        <td style="padding: 10px;">{{post.updatedAt.toISOString().slice(0,10)}}</td>
+                       
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
-         <hr style="width: 50%; margin: 0 auto">
-         <div style="display: flex;  flex-direction: column; justify-content: center; align-items: center;">
-            <h2>사진 2</h2>
-        </div>
+        
+         
+         
 
 
         {% include "footer.html" %}

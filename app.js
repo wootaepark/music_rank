@@ -8,6 +8,7 @@ const postRouter = require('./routes/post');
 const authRouter = require('./routes/auth');
 const nunjucks = require('nunjucks');
 const passport = require('passport');
+const truncateString = require('./nunjucks/nunjucks')
 
 
 const {sequelize} = require('./models');
@@ -19,9 +20,11 @@ passportConfig();
 
 app.set('port', process.env.PORT || 3000);
 app.set('view engine','html');
+
 nunjucks.configure('views',{
     express : app,
     watch : true,
+
 });
 sequelize.sync({force : false})
     .then(()=>{

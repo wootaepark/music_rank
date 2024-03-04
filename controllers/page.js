@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const truncateString = require('../nunjucks/nunjucks');
 
 exports.renderMain = (req, res) =>{
     res.render('main');
@@ -13,8 +14,25 @@ exports.renderLogin = (req, res) =>{
 exports.renderTitle = (req, res) =>{
     res.render('index');
 }
-exports.renderPostAll = (req, res) =>{
-    res.render('postAll');
+exports.renderPostAll = async (req, res) =>{
+
+    try{
+        const post = await Post.findAll({
+            include : {
+                model : User,
+                attributes : ['id','nick'], 
+            }
+        });
+        res.locals.posts = post;
+       
+    
+        
+        res.render('postAll');
+    }
+    catch(err){
+        console.error(err);
+    }
+   
 }
 exports.renderMyPage = async (req, res, next) =>{
 
