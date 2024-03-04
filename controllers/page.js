@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Post = require('../models/post');
-const truncateString = require('../nunjucks/nunjucks');
 
 exports.renderMain = (req, res) =>{
     res.render('main');
@@ -22,12 +21,14 @@ exports.renderPostAll = async (req, res) =>{
                 model : User,
                 attributes : ['id','nick'], 
             }
+            
         });
         res.locals.posts = post;
+    
        
     
         
-        res.render('postAll');
+        res.render('postAll',{user : req.user});
     }
     catch(err){
         console.error(err);

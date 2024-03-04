@@ -8,7 +8,6 @@ const postRouter = require('./routes/post');
 const authRouter = require('./routes/auth');
 const nunjucks = require('nunjucks');
 const passport = require('passport');
-const truncateString = require('./nunjucks/nunjucks')
 
 
 const {sequelize} = require('./models');

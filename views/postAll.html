@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
-    
+    <style>
+        .hidden{
+            display : none;
+        }
+    </style>
     <head>
         <meta charset="UTF-8">
         <title name="title">LP PHOTO | 모든 글</title>
@@ -19,8 +23,8 @@
         </div>
         {% if user and user.id  %}
         <div style="margin-left: 66%; margin-bottom: 50px;">
-            <label>
-                내 글 안보기 <input type="checkbox">
+            <label >
+                내 글 안보기 <input type="checkbox" id="myPostsCheckbox" onchange="toggleMyPosts()">
             </label>
         </div>
         {% endif %}
@@ -40,6 +44,17 @@
         
                 <!-- 포스트 반복 루프 -->
                 {% for post in posts %}
+                {% if post.User.id === user.id%}
+                    <tr style="border-bottom: 1px solid #ddd;" class="postTableContainer">
+                        <td style="padding: 10px;">{{post.postId}}</td>
+                        <td style="padding: 10px;"><a href="#" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'" style="text-decoration: none; color:black;">{{post.title}}</a></td>
+                        <td style="padding: 10px;">{{post.User.nick}}</td>
+                        <!-- 여기에 좋아요 및 업로드 시간 속성 추가 -->
+                        <td style="padding: 10px;">0</td>
+                        <td style="padding: 10px;">{{post.updatedAt.toISOString().slice(0,10)}}</td>
+                       
+                    </tr>
+                    {% else %}
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px;">{{post.postId}}</td>
                         <td style="padding: 10px;"><a href="#" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'" style="text-decoration: none; color:black;">{{post.title}}</a></td>
@@ -49,9 +64,26 @@
                         <td style="padding: 10px;">{{post.updatedAt.toISOString().slice(0,10)}}</td>
                        
                     </tr>
+                    {% endif %}
                 {% endfor %}
             </table>
         </div>
+
+        <script>
+            function toggleMyPosts() {
+                const checkbox = document.getElementById('myPostsCheckbox');
+                const postTableContainer = document.querySelectorAll('.postTableContainer');
+
+                if (checkbox.checked) {
+                    // 체크되었을 때 내 게시물 보이기
+                    
+                    postTableContainer.forEach(row => row.classList.add('hidden'));
+                } else {
+                    // 체크 해제되었을 때 내 게시물 숨기기
+                    postTableContainer.forEach(row => row.classList.remove('hidden'));
+                }
+            }
+        </script>
         
          
          
