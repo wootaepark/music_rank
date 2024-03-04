@@ -13,6 +13,9 @@ exports.renderLogin = (req, res) =>{
 exports.renderTitle = (req, res) =>{
     res.render('index');
 }
+exports.renderPostAll = (req, res) =>{
+    res.render('postAll');
+}
 exports.renderMyPage = async (req, res, next) =>{
 
     try{

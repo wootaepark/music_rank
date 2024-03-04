@@ -3,7 +3,7 @@
     
     <head>
         <meta charset="UTF-8">
-        <title name="title">LP PHOTO | {{title}}</title>
+        <title name="title">LP PHOTO | 모든 글</title>
         <link rel="icon" href="image/camera.ico">
         <link rel="stylesheet" href="style/myPage.css">
         <link rel="stylesheet" href="style/main.css">
@@ -14,9 +14,16 @@
     <body id="main">
         {% include "header.html" %}
 
-        <div id="title" style="margin-bottom: 100px;">
-            <h1 style="margin-left: 33%; "><b>{{user.nick}} 님의 사진첩 {{user.email}}</b> 📖</h1>
+        <div id="title" style="margin-bottom: 50px;">
+            <h1 style="margin-left: 33%; "><b>모든 게시글</b> 📖</h1>
         </div>
+        {% if user and user.id  %}
+        <div style="margin-left: 66%; margin-bottom: 50px;">
+            <label>
+                내 글 보기 <input type="checkbox">
+            </label>
+        </div>
+        {% endif %}
 
         
         <div style="display: flex;  flex-direction: column; justify-content: center; align-items: center;">
@@ -34,4 +41,5 @@
     </body>
 </html>
 
-<!-- 나중에 모든 이의 게시물을 볼 수 있도록 수정이 필요한 상황 현재 라우터도 구현이 되있지 않다.-->
+<!-- 나중에 모든 이의 게시물을 볼 수 있도록 수정이 필요한 상황 현재 라우터도 구현이 되있지 않다.
+내가 쓴 글을 포함하여 가져올지 아닐지 체크 하는 체크박스를 이용해서 클릭 비클릭시 페이지를 다르게 하고 싶음-->
