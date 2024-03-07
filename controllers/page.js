@@ -13,7 +13,33 @@ exports.renderLogin = (req, res) =>{
 exports.renderTitle = (req, res) =>{
     res.render('index');
 }
-exports.renderPostAll = async (req, res) =>{
+exports.renderPost = async (req, res, next) =>{
+    try{
+        const post = await Post.findOne({
+            where : {id : req.params.id},
+            include : {
+                model : User,
+                attributes : ['id','nick'],
+            }
+        });
+        if(post){
+            
+            res.render('post',{
+                title : post.title,
+                twit : post,
+            });
+        }
+        else{
+            res.status(404).json({error : '해당 포스트는 없습니다.'});
+        }
+    }
+    catch(err){
+        console.error(err);
+        next(err);
+    }
+    
+}
+exports.renderPostAll = async (req, res, next) =>{
 
     try{
         const post = await Post.findAll({
@@ -32,6 +58,7 @@ exports.renderPostAll = async (req, res) =>{
     }
     catch(err){
         console.error(err);
+        next(err);
     }
    
 }
@@ -62,7 +89,7 @@ exports.renderMyPage = async (req, res, next) =>{
     
 }
 
-exports.renderPost = async  (req, res, next) =>{
+exports.renderModify = async  (req, res, next) =>{
 
     try{
         const post = await Post.findOne({where : {id : req.params.id}});
@@ -73,7 +100,7 @@ exports.renderPost = async  (req, res, next) =>{
 
         }
         else{
-            res.status(400).json({error : '권한이 없습니다.'});
+            res.status(404).json({error : '권한이 없습니다.'});
         }
     }
     catch(error){
