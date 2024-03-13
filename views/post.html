@@ -19,7 +19,7 @@
 
             <div>
                 <h5 style="text-align: center; ">작성자 : <a href="#">{{twit.User.nick}}</a></h5>
-                <h6 style="text-align: right; margin-right: 50px;">게시일 : {{twit.createdAt.toISOString().slice(0,10)}}</h6>
+                <h6 style="text-align: right; margin-right: 50px;">게시일 : {{twit.createdAt.toISOString().slice(0,19).replace('T',' ')}}</h6>
             </div>
         </div>
         
