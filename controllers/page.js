@@ -78,7 +78,7 @@ exports.renderMyPage = async (req, res, next) =>{
     
         return res.render('myPage',{
             title : '마이페이지',
-            user : req.user,
+            user : req.user, // req.user 는 시퀄라이즈 생성시 로그인시 생성되는 파라미터
             twits : posts,
         })
     }
@@ -92,8 +92,12 @@ exports.renderMyPage = async (req, res, next) =>{
 exports.renderModify = async  (req, res, next) =>{
 
     try{
-        const post = await Post.findOne({where : {id : req.params.id}});
+        const post = await Post.findOne({where : {id : req.params.id}
+            
+        
+        });
         if(post && req.user.id === post.poster){
+
 
             res.locals.post = post;
             res.render('modify-post');
@@ -112,6 +116,30 @@ exports.renderModify = async  (req, res, next) =>{
   
     
     
+}
+exports.renderViewPage = async(req, res, next) =>{
+    try{
+        const user = await User.findOne({where : {nick : req.params.id}});
+        const posts = await Post.findAll({where : {poster : user.id}});
+
+        if(!user){
+            res.status(404).json({error : '해당 유저가 존재하지 않습니다.'});
+        }
+       
+
+        console.log('타입 ',typeof(user.nick),'파라미터' , req.params.id);
+        res.render('viewPage',{
+            
+            title : user.nick,
+            posts : posts,
+
+
+        });
+    }
+    catch(error){
+        console.error(error);
+        next(error);
+    }
 }
 
 

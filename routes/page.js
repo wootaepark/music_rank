@@ -1,6 +1,6 @@
 const express = require('express');
 const {isLoggedIn, isNotLoggedIn} = require('../middlewares');
-const {renderTitle, renderMain, renderUpload, renderLogin,renderMyPage, renderModify,renderPost ,renderPostAll} = require('../controllers/page');
+const {renderTitle, renderMain, renderUpload, renderLogin,renderMyPage, renderModify,renderPost ,renderPostAll, renderViewPage} = require('../controllers/page');
 
 const router = express.Router();
 
@@ -17,6 +17,7 @@ router.get('/mypage',isLoggedIn ,renderMyPage);
 router.get('/modify-post/:id',isLoggedIn,renderModify);
 router.get('/viewPost/:id',renderPost);
 router.get('/postAll', renderPostAll);
+router.get('/viewPage/:id',renderViewPage);
 
 module.exports = router;
 

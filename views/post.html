@@ -18,7 +18,14 @@
             <h1 style="text-align: center; margin-bottom: 50px;"><b>{{twit.title}}</b></h1>
 
             <div>
-                <h5 style="text-align: center; ">작성자 : <a href="#">{{twit.User.nick}}</a></h5>
+                <h5 style="text-align: center; ">작성자 : 
+                    {% if user and user.id === twit.poster %}
+                    <a href="/myPage">{{twit.User.nick}}</a>
+                    {% else %}
+                    <a href="/viewPage/{{twit.User.nick}}">{{twit.User.nick}}</a>
+                    {% endif %}
+
+                </h5>
                 <h6 style="text-align: right; margin-right: 50px;">게시일 : {{twit.createdAt.toISOString().slice(0,19).replace('T',' ')}}</h6>
             </div>
         </div>
