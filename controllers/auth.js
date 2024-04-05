@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require('../models/user');
+const jwt = require("jsonwebtoken");
 
 
 
@@ -44,7 +45,9 @@ exports.join = async (req, res, next) =>{
     }
 }
 
-exports.login = (req, res, next)=>{
+exports.login = async (req, res, next)=>{
+
+
     passport.authenticate('local', (authError, user, info) =>{
        
         if(authError){

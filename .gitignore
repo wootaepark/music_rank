@@ -136,4 +136,4 @@ dist
 /public/music
 /uploads
 /config
-
+/migrations

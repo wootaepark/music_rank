@@ -78,7 +78,7 @@ exports.renderMyPage = async (req, res, next) =>{
     
         return res.render('myPage',{
             title : '마이페이지',
-            user : req.user, // req.user 는 시퀄라이즈 생성시 로그인시 생성되는 파라미터
+            //user : req.user, // req.user 는 시퀄라이즈 생성시 로그인시 생성되는 파라미터
             twits : posts,
         })
     }

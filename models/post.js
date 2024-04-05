@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-class Post extends Sequelize.Model{
+class Post extends Sequelize.Model{ 
     static initiate(sequelize){
         Post.init({
             title : {
@@ -21,6 +21,11 @@ class Post extends Sequelize.Model{
                 type : Sequelize.STRING(10),
                 allowNull : false,
                 unique : true,
+            }, // 좋아요
+            likes : {
+                type : Sequelize.INTEGER(),
+                defaultValue : 0,
+                allowNull : false,
             }
 
 
