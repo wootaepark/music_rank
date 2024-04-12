@@ -7,8 +7,10 @@ const router = express.Router();
 router.use((req, res, next)=>{
     res.locals.user = req.user;
     next();
-    // 아래의 모든 페이지 라우터에서 user를 공통으로 쓸 수 있도록 함.
+    // 아래의 모든 페이지 라우터에서 user를 공통으로 쓸 수 있도록 함. (미들웨어 변수)
 });
+
+
 
 router.get('/',renderTitle);
 router.get('/main',renderMain);
