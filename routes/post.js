@@ -19,6 +19,8 @@ catch(error){
     fs.mkdirSync('uploads');
 }
 
+
+// multer 를 이용한 이미지 업로드 시스템 구현
 const upload = multer({
     storage: multer.diskStorage({
         destination(req, file, cb){
