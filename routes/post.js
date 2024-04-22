@@ -43,6 +43,7 @@ const upload = multer({
 router.get('/:id/img', isLoggedIn, getPost);
 
 // POST post/upload
+// Single Image
 router.post('/upload',isLoggedIn,upload.single('img'),createPost);
 
 
