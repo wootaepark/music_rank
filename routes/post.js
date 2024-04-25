@@ -11,6 +11,7 @@ const Post = require('../models/post');
 const router = express.Router();
 
 
+// 초기 업로드 폴더 생성
 try{
     fs.readdirSync('uploads');
 }
