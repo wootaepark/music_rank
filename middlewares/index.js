@@ -14,3 +14,5 @@ exports.isNotLoggedIn = (req, res, next) =>{
         return res.send(decodeURIComponent(message));
     }
 }
+
+// 로그인이 되어 있는지 확인하는 미들웨어, req.isAuthenticated()가 정의 되어 있으면 로그인 된 상태
