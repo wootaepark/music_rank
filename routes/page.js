@@ -22,6 +22,8 @@ router.get('/viewPost/:id',renderPost);
 router.get('/postAll', renderPostAll);
 router.get('/viewPage/:id',renderViewPage);
 
-module.exports = router;
+module.exports = router; 
+
+// 최종적으로 router 를 외부에서 사용하기 위한 exports 
 
 
