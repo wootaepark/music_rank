@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// fs를 이용하여 image 삭제하는 미들웨어
 
 exports.deleteImage = (filePath, fileName) =>{
     fs.readdir(path.join(filePath,'..','uploads'), (err, files)=>{
