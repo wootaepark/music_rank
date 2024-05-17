@@ -51,6 +51,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// passport 미들웨어 설정
 
 
 app.use('/',pageRouter); // 페이지 이동 라우터
