@@ -25,7 +25,7 @@ nunjucks.configure('views',{
     watch : true,
 
 });
-sequelize.sync({force : false})
+sequelize.sync({force : false}) // true 이면 데이터베이스를 싹 지우고 다시 작성한다. (주의)
     .then(()=>{
         console.log('데이터 베이스 연결 성공');
     })
