@@ -61,7 +61,7 @@ app.use('/post',postRouter); // 게시글 관리 라우터
 
 
 app.use((req, res, next)=>{
-    const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+    const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`); // 404 not found 에러 처리 미들웨어
     error.status = 404;
     next(error);
 })
